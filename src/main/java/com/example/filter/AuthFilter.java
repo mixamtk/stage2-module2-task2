@@ -7,14 +7,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter (urlPatterns = "/users/*")
+@WebFilter (urlPatterns = "/user/*")
 public class AuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpSession session = httpRequest.getSession();
-        if (session == null || session.getAttribute("user") == null){
+        if (session != null && session.getAttribute("user") == null){
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.jsp");
         } else {
             chain.doFilter(request,response);
